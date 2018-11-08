@@ -1,12 +1,14 @@
-if [ ! -d gltf ]; then
-  mkdir gltf;
-fi
-if [ ! -d collada ]; then
-  mkdir collada;
-fi
-for a in IFC/*.ifc ; do
-    d=$(basename $a)
-    echo "Converting $d"
-    ./Binaries/IfcConvert IFC/$d  collada/$d.dae
-    ./Binaries/COLLADA2GLTF-bin -i collada/$d.dae -o gltf/$d.gltf
+for format in "gltf" "collada" "obj"
+  do
+    if [ ! -d "data/$format" ]; then
+      mkdir -p "data/$format";
+    fi
+  done
+
+for a in data/IFC/*.ifc ; do
+    d=$(basename $a .ifc)
+    echo "converting $d"
+    ./Binaries/IfcConvert data/IFC/$d.ifc data/obj/$d.obj
+    ./Binaries/IfcConvert data/IFC/$d.ifc  data/collada/$d.dae
+    ./Binaries/COLLADA2GLTF-bin -i data/collada/$d.dae -o data/gltf/$d.gltf
 done

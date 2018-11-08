@@ -9,12 +9,15 @@ and COLLADA2GLTF (https://github.com/KhronosGroup/COLLADA2GLTF)
 
 Compile COLLADA2GLTF
 
-Create folder "IFC"
 Create folder "Binaries" and put binary files
-COLLADA2GLTF-bin and IfcConvert
+	COLLADA2GLTF-bin IfcConvert
 into this folder
+
+Create folder "data/IFC"
 
 --------------------------------------------------------------------
 Usage:
 
-Put all binary files into IFC folder and run ./IFCtoGLTF.sh
+put IFC files in "data/IFC" that you want to convert
+
+run ./IFCtoGLTF.sh
