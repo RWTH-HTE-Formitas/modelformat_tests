@@ -8,7 +8,7 @@ const styles = {
 
 class Visualizer extends Component {
 
-    modelLocation = "https://raw.githubusercontent.com/RWTH-HTE-Formitas/Visualizer/tmp/public/model.gltf";
+    modelLocation = "data/dae2gltf/model1.gltf";
 
     render() {
         return (

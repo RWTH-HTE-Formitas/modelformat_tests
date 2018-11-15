@@ -3,6 +3,7 @@ import * as THREE from "three";
 import OrbitControls from "orbit-controls-es6";
 import GLTFLoader from 'three-gltf-loader';
 
+
 class Scene extends Component {
   render() {
     return (
@@ -14,9 +15,28 @@ class Scene extends Component {
         ref={el => (this.container = el)}
       />
     );
+
   }
 
   componentDidMount() {
+
+    var manager = new THREE.LoadingManager();
+
+    var t0;
+    var t1;
+
+    manager.onStart = function (item, loaded, total) {
+        console.log('Loading started');
+        t0 = performance.now();
+    };
+
+    manager.onLoad = function () {
+        console.log('Loading complete');
+        // bar.destroy();
+        t1 = performance.now();
+        console.log("Call to doSomething took " + (t1 - t0)/1000 + " seconds.")
+    };
+
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffcc80);
 
@@ -50,7 +70,7 @@ class Scene extends Component {
     scene.add(light_p);
 
     // model
-    var loader = new GLTFLoader();
+    var loader = new GLTFLoader(manager);
     loader.load(this.props.modelLocation, function (gltf) {
 
       var box = new THREE.Box3().setFromObject(gltf.scene.children[0]);
@@ -58,7 +78,7 @@ class Scene extends Component {
       gltf.scene.children[0].position.x = -1 * box.getCenter().x;
       gltf.scene.children[0].position.y = -1 * box.getCenter().y;
       gltf.scene.children[0].position.z = -1 * box.getCenter().z;
-      
+
       scene.add(gltf.scene);
 
       var size = Math.max(box.getSize().x, box.getSize().y, box.getSize().z);
@@ -71,14 +91,13 @@ class Scene extends Component {
 
       camera.position.z = box.getSize().z*1.5;
     });
-    
+
     // animate
     const animate = () => {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
     this.container.appendChild(renderer.domElement);
-
     animate();
 
   }
