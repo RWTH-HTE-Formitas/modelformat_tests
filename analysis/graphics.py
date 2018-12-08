@@ -26,16 +26,18 @@ dae_gltf_load_trimmed = [0.14, 1.22, 18.33, 0.86, 1.05, 1.33, 25.3]
 obj_glb_load = [0.13, 1.19, 0, 0.89, 0.93, 0.87, 0]
 dae_glb_load = [0.11, 1.22, 9.44, 0.94, 0.82, 0.74, 21.89]
 
-data_size = np.zeros((6,7))
+data_size = np.zeros((8,7))
 data_size[0] = np.divide(obj_sizes, org_size)
 data_size[1] = np.divide(obj_gltf_sizes, org_size)
 data_size[2] = np.divide(obj_gltf_trimmed, org_size)
 data_size[3] = np.divide(dae_sizes, org_size)
 data_size[4] = np.divide(dae_gltf, org_size)
 data_size[5] = np.divide(dae_gltf_trimmed, org_size)
+data_size[6] = np.divide(obj_glb_sizes, org_size)
+data_size[7] = np.divide(dae_glb_sizes, org_size)
 
 data_size[data_size < 0] = float('inf')
-yLabels = ["obj", "obj2gltf", "obj2gltf_trimmed", "dae", "dae2gltf", "dae2gltf_trimmed"]
+yLabels = ["obj", "obj2gltf", "obj2gltf_trimmed", "dae", "dae2gltf", "dae2gltf_trimmed", "obj2glb", "dae2glb"]
 ax = sns.heatmap(data_size, annot=True, vmin=0, vmax=3, cmap="summer", yticklabels=yLabels)
 plt.xlabel("model id")
 plt.ylabel("data format")
