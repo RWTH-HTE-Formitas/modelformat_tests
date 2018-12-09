@@ -8,7 +8,7 @@ const styles = {
 
 class Visualizer extends Component {
 
-    modelLocation = "data/dae2gltf/model1.gltf";
+    modelLocation = "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/obj/tree.obj";
 
     render() {
         return (

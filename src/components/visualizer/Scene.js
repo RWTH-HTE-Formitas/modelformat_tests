@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import * as THREE from "three";
 import OrbitControls from "orbit-controls-es6";
 import GLTFLoader from 'three-gltf-loader';
-
+import OBJLoader from 'three-obj-loader';
+OBJLoader(THREE);
 
 class Scene extends Component {
   render() {
@@ -70,26 +71,30 @@ class Scene extends Component {
     scene.add(light_p);
 
     // model
-    var loader = new GLTFLoader(manager);
-    loader.load(this.props.modelLocation, function (gltf) {
+    //var loader = new GLTFLoader(manager);
+    //var loader = new OBJLoader(manager);
+    this.THREE = THREE;
+    const objLoader = new this.THREE.OBJLoader();
+    
+    objLoader.load(this.props.modelLocation, (obj) => {
+      console.log(obj);
+      var box = new THREE.Box3().setFromObject(obj.children[0]);
 
-      var box = new THREE.Box3().setFromObject(gltf.scene.children[0]);
+      obj.children[0].position.x = -1 * box.getCenter().x;
+      obj.children[0].position.y = -1 * box.getCenter().y;
+      obj.children[0].position.z = -1 * box.getCenter().z;
 
-      gltf.scene.children[0].position.x = -1 * box.getCenter().x;
-      gltf.scene.children[0].position.y = -1 * box.getCenter().y;
-      gltf.scene.children[0].position.z = -1 * box.getCenter().z;
-
-      scene.add(gltf.scene);
+      scene.add(obj);
 
       var size = Math.max(box.getSize().x, box.getSize().y, box.getSize().z);
-      var gridHelper = new THREE.GridHelper(size, size/5);
+      var gridHelper = new THREE.GridHelper(size, size / 5);
       scene.add(gridHelper);
 
       var gridHelperY = new THREE.GridHelper(size, size / 5);
       gridHelperY.rotation.x = Math.PI / 2;
       scene.add(gridHelperY);
 
-      camera.position.z = box.getSize().z*1.5;
+      camera.position.z = box.getSize().z * 1.5;
     });
 
     // animate
