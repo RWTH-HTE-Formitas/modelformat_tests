@@ -18,8 +18,12 @@ for a in data/IFC/*.ifc ; do
     ./Binaries/IfcConvert data/IFC/$d.ifc  data/collada/$d.dae
     ./Binaries/COLLADA2GLTF-bin -i data/collada/$d.dae -o data/dae2gltf/$d.gltf
     gltf-pipeline -i data/dae2gltf/$d.gltf -o data/dae2gltf/$d.opt.gltf
+    gltf-pipeline -i data/dae2gltf/$d.gltf -o data/dae2gltf/$d.glb
+    gltf-pipeline -i data/dae2gltf/$d.opt.gltf -o data/dae2gltf/$d.opt.glb
 
     ./Binaries/IfcConvert data/IFC/$d.ifc data/obj/$d.obj
     obj2gltf -i data/obj/$d.obj -o data/obj2gltf/$d.gltf
     gltf-pipeline -i data/obj2gltf/$d.gltf -o data/obj2gltf/$d.opt.gltf
+    gltf-pipeline -i data/obj2gltf/$d.gltf -o data/obj2gltf/$d.glb
+    gltf-pipeline -i data/obj2gltf/$d.opt.gltf -o data/obj2gltf/$d.opt.glb
 done
